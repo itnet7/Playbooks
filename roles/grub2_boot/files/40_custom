@@ -1,0 +1,15 @@
+#!/bin/sh
+exec tail -n +3 $0
+# This file provides an easy way to add custom menu entries.  Simply type the
+# menu entries you want to add after this comment.  Be careful not to change
+# the 'exec tail' line above.
+
+menuentry "Foreman Build Menu" {
+set root=(hd0,msdos1)
+set isofile=/bootdisk_lnsvr0357.gcsd.harris.com.iso
+loopback loop (hd0,msdos1)/bootdisk_lnsvr0357.gcsd.harris.com.iso
+linux16 (loop,msdos1)/ipxe
+initrd16 (loop,msdos1)/script
+boot
+}
+

@@ -1,0 +1,18 @@
+--- # tasks main.yml fle for grub2_boot role
+  - name: copy down the iso file to the boot directory
+    copy: src=files/foreman_minimal_boot.iso dest=/boot
+
+  - name: copy 40_custom to grub for automated provisioning
+    copy: src=files/40_custom dest=/etc/grub.d/40_custom owner=root group=root mode=755 backup=yes
+
+  - name: replace default grub value
+    lineinfile: dest=/etc/default/grub regexp='^GRUB_DEFAULT=0'
+                line='GRUB_DEFAULT="Foreman Build Menu"'
+                backrefs=yes
+  - name: run update-grub2 command
+    shell: /usr/sbin/update-grub2
+
+## I'm going to add a check don't complete reboot unless the grub line reads: Foreman Build Menu
+
+  - name: reboot to build
+    shell: sleep 5 && /sbin/shutdown -r now
