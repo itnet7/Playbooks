@@ -6,8 +6,8 @@ exec tail -n +3 $0
 
 menuentry "Foreman Build Menu" {
 set root=(hd0,msdos1)
-set isofile=/bootdisk_lnsvr0357.gcsd.harris.com.iso
-loopback loop (hd0,msdos1)/bootdisk_lnsvr0357.gcsd.harris.com.iso
+set isofile=/bootdisk_generic.iso
+loopback loop (hd0,msdos1)/bootdisk_generic.iso
 linux16 (loop,msdos1)/ipxe
 initrd16 (loop,msdos1)/script
 boot
