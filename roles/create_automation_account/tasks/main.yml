@@ -1,8 +1,5 @@
 ---
 # tasks file for create_automation_account
-/etc/ansible/roles/create_ansible_user/tasks/main.yml 
----
-# tasks file for create_ansible_user
 - name: add automation user with hash
   user:
     name: automation
