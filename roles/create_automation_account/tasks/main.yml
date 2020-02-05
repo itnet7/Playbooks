@@ -1,0 +1,25 @@
+---
+# tasks file for create_automation_account
+/etc/ansible/roles/create_ansible_user/tasks/main.yml 
+---
+# tasks file for create_ansible_user
+- name: add automation user with hash
+  user:
+    name: automation
+    comment: "Create account used for Automation"
+    password: $6$YR<Create_an_initial_user_account_on_a_nonproduction_host_with_a_password_you'd_preferreplace>'
+- name: Add public ssh key for user
+  authorized_key: 
+    user: automation
+    state: present
+    key: "{{ lookup('file', 'files/ssh/id_rsa.pub') }}"
+- name: Add automation user to sudoers with NOPASSWD
+  lineinfile:
+    dest: /etc/sudoers
+    regexp: '^includedir '
+    insertafter: '^#includedir '
+    line: automation      ALL=(ALL)       NOPASSWD: ALL
+    validate: /sbin/visudo -cf %s
+
+
+
