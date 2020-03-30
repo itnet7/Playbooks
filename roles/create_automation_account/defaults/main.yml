@@ -1,2 +1,5 @@
 ---
 # defaults file for create_automation_account
+
+automation_userpassword: Newpass12
+automotion_user: devops

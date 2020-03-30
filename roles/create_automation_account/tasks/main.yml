@@ -1,21 +1,23 @@
 ---
 # tasks file for create_automation_account
-- name: add automation user with hash
+- name: Add {{ automation_user }} user with hashed password
   user:
-    name: automation
-    comment: "Create account used for Automation"
-    password: $6$YR<Create_an_initial_user_account_on_a_nonproduction_host_with_a_password_you'd_preferreplace>'
-- name: Add public ssh key for user
+    name: {{ automation_user }}
+    comment: "Create account used for Automation Tasks"
+    password: "{{ automation_userpassword | password_hash('sha512') }}"
+    shell: /bin/bash
+    update_password: on_create
+- name: Add public ssh key for {{ automation_user }}
   authorized_key: 
-    user: automation
+    user: {{ automation_user }}
     state: present
     key: "{{ lookup('file', 'files/ssh/id_rsa.pub') }}"
-- name: Add automation user to sudoers with NOPASSWD
+- name: Add {{ automation_user }} user to sudoers with NOPASSWD
   lineinfile:
     dest: /etc/sudoers
     regexp: '^includedir '
     insertafter: '^#includedir '
-    line: automation      ALL=(ALL)       NOPASSWD: ALL
+    line: '{{ automation_user }}      ALL=(ALL)       NOPASSWD: ALL'
     validate: /sbin/visudo -cf %s
 
 
