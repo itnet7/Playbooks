@@ -19,6 +19,3 @@
     insertafter: '^#includedir '
     line: '{{ automation_user }}      ALL=(ALL)       NOPASSWD: ALL'
     validate: /sbin/visudo -cf %s
-
-
-
